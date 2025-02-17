@@ -41,6 +41,43 @@
       z-index: 1000;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
     }
+
+    .overlay-menu {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(50, 50, 50, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .overlay-menu input {
+      width: 50px;
+      margin: 5px;
+      text-align: center;
+    }
+
+    .overlay-menu button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 14px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .overlay-menu button:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 
@@ -49,7 +86,25 @@
     Please use a browser that supports "canvas"
   </canvas>
   <canvas id="crosshairCanvas"></canvas>
+  <div id="world-selection" class="overlay-menu">
+    <h2>Select World Size</h2>
 
+    <label for="worldX">X Size:</label>
+    <input type="number" id="worldX" value="32" min="1">
+
+    <label for="worldY">Y Size:</label>
+    <input type="number" id="worldY" value="3" min="1">
+
+    <label for="worldZ">Z Size:</label>
+    <input type="number" id="worldZ" value="32" min="1">
+
+    <button onclick="startGame()">Start Custom World</button>
+
+    <h3>Or Select a Preset:</h3>
+    <button onclick="setWorldSize(32, 3, 32)">Small (32x3x32)</button>
+    <button onclick="setWorldSize(100, 15, 100)">Medium (100x15x100)</button>
+    <button onclick="setWorldSize(2000, 3, 2000)">Large (2000x3x2000)</button>
+  </div>
   <div id="overlay">
     Right click for mouse movement<br>
     Press "Esc" to exit, "Tab" for menu
@@ -57,6 +112,7 @@
   <div id="render-settings" class="settings-menu">
     <label for="render-distance">Render Distance: </label>
     <input type="range" id="render-distance" min="7" max="34" step="1" value="20">
+    <br>
     <br>
     <button id="toggle-transparency">Toggle Transparency</button>
   </div>
@@ -67,7 +123,7 @@
   <p>
     <!-- <button type="button" id="green">Green</button>
     <button type="button" id="red">Red</button> -->
-    Notes to Grader: the poke will have one of the fur fall off, cant complete the disassemble function.
+    Should have commented everything on Canvas
     <!-- <p>
     <button type="button" id="pointButton">Point</button>
     <button type="button" id="triButton">Triangle</button>
@@ -85,10 +141,10 @@
     Green <input type="range" min="0" max="100" value="0" class="slider" id="greenSlide">
     <p>
     Blue <input type="range" min="0" max="100" value="0" class="slider" id="blueSlide"> -->
-  <p>
+    <!-- <p>
     Camera Angle X <input type="range" min="0" max="270" value="5" class="slider" id="angleXSlide">
   <p>
-    Camera Angle Y <input type="range" min="0" max="270" value="5" class="slider" id="angleYSlide">
+    Camera Angle Y <input type="range" min="0" max="270" value="5" class="slider" id="angleYSlide"> -->
   <p>
     Limb Control <input type="range" min="-40" max="40" value="0" class="slider" id="limbSlide">
   <p>

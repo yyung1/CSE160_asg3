@@ -195,6 +195,7 @@ var footWidth = legWidth;
 var footHeight = 0.05;
 var footDepth = -0.12;
 let leavesImg;
+let selectedWorldSize = null;
 
 // World Construct
 let worldX = 1000;
@@ -226,8 +227,8 @@ function addActionsfromHtmlUI() {
       this.textContent = g_limbAnimation ? "Enable" : "Disable";
     }
   };
-  document.getElementById('angleXSlide').addEventListener('mousemove', function () { g_globalAngleX = this.value; /* renderAllShapes(); */renderScene(); });
-  document.getElementById('angleYSlide').addEventListener('mousemove', function () { g_globalAngleY = this.value; /* renderAllShapes(); */renderScene(); });
+  // document.getElementById('angleXSlide').addEventListener('mousemove', function () { g_globalAngleX = this.value; /* renderAllShapes(); */renderScene(); });
+  // document.getElementById('angleYSlide').addEventListener('mousemove', function () { g_globalAngleY = this.value; /* renderAllShapes(); */renderScene(); });
   document.getElementById('limbSlide').addEventListener('mousemove', function () {
     g_limbAngle = this.value; /* renderAllShapes(); */
     document.getElementById("lowerArmSlider").value = Math.abs(g_limbAngle / 2);
@@ -421,7 +422,38 @@ function initTextures() {
   leavesImg.src = 'leaves.png';
 }
 
+function setWorldSize(x, y, z) {
+  document.getElementById("worldX").value = x;
+  document.getElementById("worldY").value = y;
+  document.getElementById("worldZ").value = z;
+  startGame();
+}
+
+function startGame() {
+  worldX = parseInt(document.getElementById("worldX").value);
+  worldY = parseInt(document.getElementById("worldY").value);
+  worldZ = parseInt(document.getElementById("worldZ").value);
+
+  if (worldX <= 0 || worldY <= 0 || worldZ <= 0) {
+    alert("World size must be greater than zero!");
+    return;
+  }
+
+  selectedWorldSize = [worldX, worldY, worldZ];
+
+  // Hide the selection menu
+  document.getElementById("world-selection").style.display = "none";
+
+  // Start the game
+  main();
+}
+
 function main() {
+  if (!selectedWorldSize) return; // Prevents rendering before selection
+
+  worldX = selectedWorldSize[0];
+  worldY = selectedWorldSize[1];
+  worldZ = selectedWorldSize[2];
   setupWebGL();
 
   connectVariablesToGLSL();
